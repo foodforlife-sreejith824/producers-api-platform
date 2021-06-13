@@ -1,6 +1,15 @@
-FROM adoptopenjdk:11-jre-hotspot
+#
+# Build stage
+#
+FROM maven:3.6.0-jdk-11-slim AS build
+COPY src /home/app/src
+COPY pom.xml /home/app
+RUN mvn -f /home/app/pom.xml clean package
+
+#
+# Package stage
+#
+FROM openjdk:11-jre-slim
+COPY --from=build /home/app/target/*.jar /usr/local/lib/app.jar
 EXPOSE 9000
-RUN mvn clean install
-ARG JAR_FILE=target/producers-0.0.1-SNAPSHOT.jar
-ADD ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","/usr/local/lib/app.jar"]
