@@ -17,5 +17,10 @@ public class ProducerResource {
         return  new Producer(producerShopId);
     }
 
+    @GetMapping("/{producerShopId}/items")
+    public Producer getItemsForProducer(@PathVariable String producerShopId) {
+        return  new Producer(producerShopId);
+    }
+
 
 }
