@@ -22,7 +22,3 @@ SP_APP_ID=$(az ad sp show --id http://$SERVICE_PRINCIPAL_NAME --query appId --ou
 # applications to authenticate to the container registry.
 echo "Service principal ID: $SP_APP_ID"
 echo "Service principal password: $SP_PASSWD"
-
-
-Service principal ID: 17c7934d-b6a6-4f7e-8d3d-77d24db92ff8
-Service principal password: JO_euE_2MTTbjHMwZ61k1ENH4ns0K3gsNw
