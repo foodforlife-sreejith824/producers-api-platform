@@ -13,7 +13,12 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# Environment variables available to all jobs and steps in this workflow
+env:
+  ACR_SERVER_NAME : foodforlifeacr
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+
 jobs:
   # This workflow contains a single job called "build"
   build:
@@ -32,16 +37,16 @@ jobs:
       - name: 'Docker login'
         uses: azure/docker-login@v1
         with:
-          login-server: ${{ secrets.ACR_SERVER_NAME}}
+          login-server: ${{ env.ACR_SERVER_NAME}}
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
       # step 3: Build Docker Image
       - name: Build Docker
-        run: docker build . -t ${{ secrets.ACR_SERVER_NAME}}/producer:${{ github.sha }}
+        run: docker build . -t ${{ env.ACR_SERVER_NAME}}/producer:${{ github.sha }}
 
       # step 4: Push Docker to Azure Registry
       - name: Push Docker
-        run: docker push ${{ secrets.ACR_SERVER_NAME}}/producer:${{ github.sha }}
+        run: docker push ${{ env.ACR_SERVER_NAME}}/producer:${{ github.sha }}
 
 
