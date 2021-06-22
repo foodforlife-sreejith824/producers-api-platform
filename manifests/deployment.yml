@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foodforlife-producer-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: foodforlife-producer-api
+  template:
+    metadata:
+      labels:
+        app: foodforlife-producer-api
+    spec:
+      containers:
+      - name: foodforlife-producer-api
+        image: foodforlifeacr.azurecr.io/foodforlife-producer-api
+        ports:
+        - containerPort: 5000
