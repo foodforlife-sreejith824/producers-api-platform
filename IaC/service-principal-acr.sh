@@ -31,6 +31,7 @@ ACR_REGISTRY_ID=$(az acr show --name $ACR_NAME --query id --output tsv)
 # echo "Service azure secret: $SP_AZ_CRED"
 
 #az ad sp create-for-rbac --name http://foodforlifeacr-push-service-principal --role acrpush --scopes foodforlifeacr.azurecr.io --sdk-auth
+az ad sp delete --id http://$SERVICE_PRINCIPAL_NAME
 
 SP_AZ_CRED=$(az ad sp create-for-rbac --name http://$SERVICE_PRINCIPAL_NAME --scopes $ACR_REGISTRY_ID --role acrpush --output json)
 echo "Service azure secret: $SP_AZ_CRED"
