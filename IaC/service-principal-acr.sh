@@ -3,7 +3,7 @@
 # Modify for your environment.
 # ACR_NAME: The name of your Azure Container Registry
 # SERVICE_PRINCIPAL_NAME: Must be unique within your AD tenant
-ACR_NAME=foodforlifeacr.azurecr.io
+ACR_NAME=foodforlifeacr
 SERVICE_PRINCIPAL_NAME=foodforlifeacr-push-service-principal
 
 # Obtain the full registry ID for subsequent command args
