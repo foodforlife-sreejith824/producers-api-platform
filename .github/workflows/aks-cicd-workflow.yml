@@ -8,55 +8,66 @@ env:
   NAMESPACE: foodforlife-aks-dev
   SECRET: foodforlife-secret
   APP_NAME: foodforlife-producer-api
-  ACR_SERVER_NAME : foodforlifeacr
+  ACR_SERVER_NAME : foodforlifeacr.azurecr.io
   
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@main
-    
-    # Connect to Azure Container Registry (ACR)
-    - uses: azure/docker-login@v1
-      with:
-        login-server: ${{ env.ACR_SERVER_NAME }}.azurecr.io
-        username: ${{ secrets.ACR_USERNAME }} 
-        password: ${{ secrets.ACR_PASSWORD }}
-    
-    # Container build and push to a Azure Container Registry (ACR)
-    - run: |
-        docker build . -t ${{ env.ACR_SERVER_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
-        docker push ${{ env.ACR_SERVER_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
-    
+      - uses: actions/checkout@v2
+
+      # Runs a set of commands using the runners shell
+      - name: Maven Build
+        run: mvn clean install
+
+      - name: 'Docker login'
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.ACR_SERVER_NAME}}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      # step 3: Build Docker Image
+      - name: Build Docker
+        run: docker build . -t ${{ env.ACR_SERVER_NAME}}/producer:latest
+
+      # step 4: Push Docker to Azure Registry
+      - name: Push Docker
+        run: docker push ${{ env.ACR_SERVER_NAME}}/producer:latest
+
     # Set the target Azure Kubernetes Service (AKS) cluster. 
-    - uses: azure/aks-set-context@v1
-      with:
-        creds: '${{ secrets.AZURE_CREDENTIALS }}'
-        cluster-name: ${{ env.CLUSTER_NAME }}
-        resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
-    
-    # Create namespace if doesn't exist
-    - run: |
-        kubectl create namespace ${{ env.NAMESPACE }} --dry-run -o json | kubectl apply -f -
-    
-    # Create image pull secret for ACR
-    - uses: azure/k8s-create-secret@v1
-      with:
-        container-registry-url: ${{ env.ACR_SERVER_NAME }}.azurecr.io
-        container-registry-username: ${{ secrets.ACR_USERNAME }}
-        container-registry-password: ${{ secrets.ACR_PASSWORD }}
-        secret-name: ${{ env.SECRET }}
-        namespace: ${{ env.NAMESPACE }}
-        force: true
-    
-    # Deploy app to AKS
-    - uses: azure/k8s-deploy@v1
-      with:
-        manifests: |
-          manifests/deployment.yml
-          manifests/service.yml
-        images: |
-          ${{ env.ACR_SERVER_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
-        imagepullsecrets: |
-          ${{ env.SECRET }}
-        namespace: ${{ env.NAMESPACE }}
+      - name: "Set AKS context and login"
+        uses: azure/aks-set-context@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          cluster-name: ${{ env.CLUSTER_NAME }}
+          resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+      
+      # Create namespace if doesn't exist
+      - name: "Create namespace"
+        run: |
+          kubectl create namespace ${{ env.NAMESPACE }} --dry-run -o json | kubectl apply -f -
+      
+      # Create image pull secret for ACR
+      - name: "Pull image secret"
+        uses: azure/k8s-create-secret@v1
+        with:
+          container-registry-url: ${{ env.ACR_SERVER_NAME }}.azurecr.io
+          container-registry-username: ${{ secrets.ACR_USERNAME }}
+          container-registry-password: ${{ secrets.ACR_PASSWORD }}
+          secret-name: ${{ env.SECRET }}
+          namespace: ${{ env.NAMESPACE }}
+          force: true
+      
+      # Deploy app to AKS
+      - name: "Deploy to AKS"
+        uses: azure/k8s-deploy@v1
+        with:
+          manifests: |
+            manifests/deployment.yml
+            manifests/service.yml
+          images: |
+            ${{ env.ACR_SERVER_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest
+          imagepullsecrets: |
+            ${{ env.SECRET }}
+          namespace: ${{ env.NAMESPACE }}
