@@ -15,7 +15,7 @@ on:
 
 # Environment variables available to all jobs and steps in this workflow
 env:
-  ACR_SERVER_NAME : foodforlifeacr.acr.io
+  ACR_SERVER_NAME : foodforlifeacr.azurecr.io
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 

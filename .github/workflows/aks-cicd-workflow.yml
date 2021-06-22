@@ -8,7 +8,7 @@ env:
   NAMESPACE: foodforlife-aks-dev
   SECRET: foodforlife-secret
   APP_NAME: foodforlife-producer-api
-  ACR_SERVER_NAME : foodforlifeacr.acr.io
+  ACR_SERVER_NAME : foodforlifeacr.azurecr.io
   
 jobs:
   build:
