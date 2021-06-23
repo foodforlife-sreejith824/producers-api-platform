@@ -80,4 +80,4 @@ jobs:
           imagepullsecrets: |
             ${{ env.SECRET }}
           namespace: ${{ env.NAMESPACE }}
-          imagePullPolicy: Always
+          imagePullPolicy: Always 

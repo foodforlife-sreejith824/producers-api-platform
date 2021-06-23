@@ -35,8 +35,8 @@ jobs:
 
       # step 3: Build Docker Image
       - name: Build Docker
-        run: docker build . -t ${{ env.ACR_SERVER_NAME}}/producer:${{ github.sha }}
+        run: docker build . -t ${{ env.ACR_SERVER_NAME}}/producer:0.0.1-SNAPSHOT
 
       # step 4: Push Docker to Azure Registry
       - name: Push Docker
-        run: docker push ${{ env.ACR_SERVER_NAME}}/producer:${{ github.sha }}
+        run: docker push ${{ env.ACR_SERVER_NAME}}/producer:0.0.1-SNAPSHOT
