@@ -1,9 +1,9 @@
-RESOURCE_GROUP="foodforlife-rg-new"
+RESOURCE_GROUP="foodforlife-rg"
 AKS_CLUSTER_NAME="foodforlife-aks"
 ACR_NAME="foodforlifeacr"
 ACR_SP="foodforlifeacr-push-service-principal"
 AKS_SP="foodforlife-aks-sp"
-REGION="westus"
+REGION="eastus"
 AKS_ROLE="contributor"
 
 
@@ -31,6 +31,6 @@ echo "Secret for for ACR push : $ACR_SP_AZ_CRED"
 
 #service principal for AKS deployment
 az ad sp delete --id http://$AKS_SP
-AKS_SP_AZ_CRED=$(az ad sp create-for-rbac --name http://$AKS_SP --scopes $AKS_REGISTRY_ID --role $AKS_ROLE  --sdk-auth --output json)
+AKS_SP_AZ_CRED=$(az ad sp create-for-rbac --name http://$AKS_SP --scopes $RG_REGISTRY_ID --role $AKS_ROLE  --sdk-auth --output json)
 echo "Secret for for AKS deployment : $AKS_SP_AZ_CRED"
 echo "======================================================================="
