@@ -7,7 +7,7 @@ on: [push]
 
 # Environment variables available to all jobs and steps in this workflow
 env:
-  ACR_SERVER_NAME : foodforlifeacr.azurecr.io
+  ACR_SERVER_NAME : foodforlifeacr
   APP_NAME: foodforlife-producer-api
   TAG: 0.0.1-snapshot
 
