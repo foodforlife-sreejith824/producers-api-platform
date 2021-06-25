@@ -1,16 +1,16 @@
-# Default values for foodforlife-producers-api.
+# Default values for producer-api-helm.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: foodforlifeacr.azurecr.io/producer
+  repository: foodforlifeacr.azurecr.io
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.0.1-SNAPSHOT"
+  tag: ""
 
-imagePullSecrets: ["foodforlife-secret"]
+imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
@@ -38,7 +38,7 @@ securityContext: {}
 
 service:
   type: LoadBalancer
-  port: 9000
+  port: 80
 
 ingress:
   enabled: false

@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "foodforlife-producers-api.fullname" . }}
+  name: {{ include "producer-api-helm.fullname" . }}
   labels:
-    {{- include "foodforlife-producers-api.labels" . | nindent 4 }}
+    {{- include "producer-api-helm.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "foodforlife-producers-api.selectorLabels" . | nindent 6 }}
+      {{- include "producer-api-helm.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "foodforlife-producers-api.selectorLabels" . | nindent 8 }}
+        {{- include "producer-api-helm.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "foodforlife-producers-api.serviceAccountName" . }}
+      serviceAccountName: {{ include "producer-api-helm.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -35,7 +35,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 9000
+              containerPort: 80
               protocol: TCP
           livenessProbe:
             httpGet:

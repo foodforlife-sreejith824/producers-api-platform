@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "foodforlife-producers-api.fullname" . }}
+  name: {{ include "producer-api-helm.fullname" . }}
   labels:
-    {{- include "foodforlife-producers-api.labels" . | nindent 4 }}
+    {{- include "producer-api-helm.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "foodforlife-producers-api.selectorLabels" . | nindent 4 }}
+    {{- include "producer-api-helm.selectorLabels" . | nindent 4 }}
