@@ -8,6 +8,8 @@ on: [push]
 # Environment variables available to all jobs and steps in this workflow
 env:
   ACR_SERVER_NAME : foodforlifeacr.azurecr.io
+  APP_NAME: foodforlife-producer-api
+  TAG: 0.0.1-snapshot
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 
@@ -35,8 +37,8 @@ jobs:
 
       # step 3: Build Docker Image
       - name: Build Docker
-        run: docker build . -t ${{ env.ACR_SERVER_NAME}}/producer:0.0.1-snapshot
+        run: docker build . -t ${{ env.ACR_SERVER_NAME }}.azurecr.io/${{ env.APP_NAME }}:{{ env.TAG }}
 
       # step 4: Push Docker to Azure Registry
       - name: Push Docker
-        run: docker push ${{ env.ACR_SERVER_NAME}}/producer:0.0.1-snapshot
+        run: docker push ${{ env.ACR_SERVER_NAME }}.azurecr.io/${{ env.APP_NAME }}:{{ env.TAG }}

@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: foodforlifeacr.azurecr.io
+  repository: foodforlifeacr.azurecr.io/foodforlife-producer-api
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "0.0.1-snapshot"
 
 imagePullSecrets: []
 nameOverride: ""
