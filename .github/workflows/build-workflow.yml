@@ -51,8 +51,6 @@ jobs:
       # step 5: install helm
       - name: install helm
         uses: Azure/setup-helm@v1
-        with:
-          version: ${{ env.HELM_VERSION_TO_INSTALL }}# default is latest
 
       # step 6 : login helm registry    
       - name: login to acr using helm
