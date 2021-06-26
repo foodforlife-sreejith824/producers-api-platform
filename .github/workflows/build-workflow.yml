@@ -55,13 +55,13 @@ jobs:
       # step 6 : login helm registry    
       - name: login to acr using helm
         run: |
-          echo $ | helm registry login foodforlifeacr --username ${{ env.ACR_SP}} --password-stdin 
+          echo $spPassword | helm registry login ${{ env.ACR_SERVER_NAME }} --username ${{ secrets.ACR_USERNAME }} --password-stdin
 
       # step 7 : Save & Push Helm chart to ACR    
       - name: save helm chart to local registry
         run: |
-          helm chart save /${{ env.HELM_CHART }}/ $.azurecr.io/$:latest
+          helm chart save /${{ env.HELM_CHART }}/ ${{ env.ACR_SERVER_NAME }}/${{ env.HELM_CHART }}:latest
             
       - name: publish chart to acr
         run: |
-          helm chart push $.azurecr.io/$:latest
+          helm chart push ${{ env.ACR_SERVER_NAME }}/${{ env.HELM_CHART }}:latest
