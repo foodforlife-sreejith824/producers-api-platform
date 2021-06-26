@@ -37,8 +37,8 @@ jobs:
 
       # step 3: Build Docker Image
       - name: Build Docker
-        run: docker build . -t ${{ env.ACR_SERVER_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ env.TAG }}
+        run: docker build . -t ${{ env.ACR_SERVER_NAME }}/${{ env.APP_NAME }}:${{ env.TAG }}
 
       # step 4: Push Docker to Azure Registry
       - name: Push Docker
-        run: docker push ${{ env.ACR_SERVER_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ env.TAG }}
+        run: docker push ${{ env.ACR_SERVER_NAME }}/${{ env.APP_NAME }}:${{ env.TAG }}
