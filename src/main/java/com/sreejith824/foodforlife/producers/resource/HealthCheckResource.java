@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping (value = "/")
 public class HealthCheckResource {
 
-    @GetMapping("healthecheck")
+    @GetMapping("healthcheck")
     public String healthCheck() {
-        return  "Healthy";
+        return  "Healthy - 0.0.2-snapshot";
     }
 }
