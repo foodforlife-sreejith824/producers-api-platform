@@ -5,6 +5,6 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 9000
+  - port: 80
   selector:
     app: foodforlife-producer-api
