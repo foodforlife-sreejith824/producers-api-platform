@@ -1,0 +1,30 @@
+trigger: none
+pr: none
+
+# define variables: registryName, registryLogin and registryPassword in the Azure pipeline UI definition
+variables:
+  - group: foodforlife-variable-group
+  - template: cd-vars-template.yml
+    parameters:
+      projectName: $(APP_NAME)
+  - name: k8sNamespace
+    value: $(NAMESPACE)
+    
+
+# define 5 variables: aks, rg, aksSpId, aksSpSecret and aksSpTenantId in the Azure pipeline UI definition
+stages:
+  - stage: test
+    displayName: test
+    jobs:
+      - deployment: test
+        variables:
+          - group: foodforlife-variable-group
+        displayName: deploy helm chart into AKS
+        pool:
+          vmImage: ubuntu-latest
+        environment: test-$(APP_NAME)
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: cd-steps-template.yml
