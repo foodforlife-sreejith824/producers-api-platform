@@ -22,7 +22,7 @@ stages:
         displayName: deploy helm chart into AKS
         pool:
           vmImage: ubuntu-latest
-        environment: test-${{ parameters.projectName }}
+        environment: test-$(APP_NAME)
         strategy:
           runOnce:
             deploy:
