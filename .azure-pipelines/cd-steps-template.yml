@@ -1,0 +1,30 @@
+parameters:
+  projectName: ""
+
+variables:
+  helmVersion: 3.2.3
+  HELM_EXPERIMENTAL_OCI: 1
+  registryServerName: "$(ACR_SERVER_NAME)"
+  projectName: "$(APP_NAME)"
+
+steps:
+  - checkout: none
+  - task: HelmInstaller@1
+    displayName: "install helm"
+
+  - bash: |
+       az login service-principal -u $(AKS_SP_ID) -p '$(AKS_SP_PASSWORD)' --tenant $(AKS_SP_TENANT)
+       az aks get-credentials -n $(CLUSTER_NAME) -g $(CLUSTER_RESOURCE_GROUP)
+       echo $(ACR_HELM_SP_PASSWORD) | helm registry login $(ACR_SERVER_NAME) --username $(ACR_HELM_SP_USERNAME) --password-stdin
+
+       helm chart pull $(ACR_SERVER_NAME)/$(HELM_CHART):latest
+       helm chart export $(ACR_SERVER_NAME)/$(HELM_CHART):latest --destination $(pipeline.workspace)/install
+       
+       helm upgrade --namespace $(k8sNamespace) --create-namespace --install --wait  \
+           --set image.repository=$(ACR_SERVER_NAME)/$(HELM_CHART) \
+           -f $(pipeline.workspace)/templates/deployment.yaml \
+           -f $(pipeline.workspace)/templates/service.yaml \
+           $(projectName) \
+           $(pipeline.workspace)/install/$(projectName)
+    failOnStderr: true
+    displayName: "deploy helm chart"
