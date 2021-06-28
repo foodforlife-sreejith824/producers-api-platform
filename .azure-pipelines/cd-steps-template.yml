@@ -14,11 +14,6 @@ steps:
        helm chart pull $(ACR_SERVER_NAME)/$(HELM_CHART):latest
        helm chart export $(ACR_SERVER_NAME)/$(HELM_CHART):latest --destination $(pipeline.workspace)/install
        
-       helm upgrade --namespace $(k8sNamespace) --create-namespace --install --wait  \
-           --set image.repository=$(ACR_SERVER_NAME)/$(HELM_CHART) \
-           -f $(pipeline.workspace)/templates/deployment.yaml \
-           -f $(pipeline.workspace)/templates/service.yaml \
-           $(projectName) \
-           $(pipeline.workspace)/install/$(projectName)
+       helm upgrade --namespace $(k8sNamespace) --create-namespace --install $(projectName) $(pipeline.workspace)/install/$(HELM_CHART)
     failOnStderr: true
     displayName: "deploy helm chart"
