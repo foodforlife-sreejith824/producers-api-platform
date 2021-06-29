@@ -5,8 +5,8 @@ resources:
   pipelines:
     - pipeline: foodforlife-release-pipeline
       source: foodforlife-ci-pipeline
-      trigger:
-      
+      trigger: true
+
 pr: none
 variables:
   - group: foodforlife-variable-group
