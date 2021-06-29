@@ -1,23 +1,17 @@
 name: CD Pipeline- Helm and AKS
-
 trigger: none
 resources:
   pipelines:
-    pipeline: release-pipeline 
-    source: foodforlife-sreejith824.producers-api-platform
-    trigger:
-    branches:
-      include:
-        - main
-
+    - pipeline: release-pipeline
+      source: foodforlife-sreejith824.producers-api-platform
+      trigger: null
+      branches:
+        include:
+          - main
 pr: none
-
-# define variables: registryName, registryLogin and registryPassword in the Azure pipeline UI definition
 variables:
   - group: foodforlife-variable-group
   - template: cd-vars-template.yml
-
-# define 5 variables: aks, rg, aksSpId, aksSpSecret and aksSpTenantId in the Azure pipeline UI definition
 stages:
   - stage: test
     displayName: test
