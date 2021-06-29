@@ -1,3 +1,4 @@
+name: ci-pipeline
 trigger:
   branches:
     include: 
