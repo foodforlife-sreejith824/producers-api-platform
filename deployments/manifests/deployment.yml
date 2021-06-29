@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: foodforlife-producer-api
-        image: foodforlifeacr.azurecr.io/foodforlife-producer-api:0.0.2-snapshot
+        image: foodforlifeacr.azurecr.io/foodforlife-producer-api:0.0.3-snapshot
         ports:
         - containerPort: 80
