@@ -1,8 +1,0 @@
-parameters:
-  projectName: "$(APP_NAME)"
-
-variables:
-  helmVersion: 3.2.3
-  HELM_EXPERIMENTAL_OCI: 1
-  registryServerName: "$(ACR_SERVER_NAME)"
-  projectName: ${{ parameters.projectName }}

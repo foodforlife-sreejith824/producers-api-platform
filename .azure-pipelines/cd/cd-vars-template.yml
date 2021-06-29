@@ -1,0 +1,8 @@
+variables:
+  HELM_EXPERIMENTAL_OCI: 1
+  registryServerName: foodforlifeacr.azurecr.io
+  projectName: foodforlife-producer-api
+  aksNamespace: foodforlife-aks-test
+  aksClusterName: foodforlife-aks
+  resourceGroup: foodforlife-rg
+  helmChart : producer-api-helm
