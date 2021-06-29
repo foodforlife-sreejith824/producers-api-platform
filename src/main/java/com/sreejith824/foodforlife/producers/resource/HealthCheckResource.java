@@ -10,6 +10,6 @@ public class HealthCheckResource {
 
     @GetMapping("healthcheck")
     public String healthCheck() {
-        return  "Health check testing - 0.0.6-snapshot";
+        return  "Health check testing - 0.1.0-snapshot";
     }
 }
