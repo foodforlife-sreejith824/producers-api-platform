@@ -1,4 +1,4 @@
-name: CD Pipeline- Helm and AKS
+name: CD-AKS-HELM
 
 trigger: none
 resources:
