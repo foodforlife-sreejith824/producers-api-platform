@@ -14,7 +14,7 @@ env:
   HELM_VERSION_TO_INSTALL: 3.5.0  
   ACR_SP: http://foodforlifeacr-push-service-principal
   HELM_CHART: producer-api-helm
-  HELM_CHART_PATH: deployments/${{ env.HELM_CHART }}
+  HELM_CHART_PATH: deployments/producer-api-helm
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 
