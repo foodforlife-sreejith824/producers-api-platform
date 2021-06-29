@@ -1,5 +1,4 @@
 variables:
-  helmVersion: 3.2.3
   HELM_EXPERIMENTAL_OCI: 1
   registryServerName: foodforlifeacr.azurecr.io
   projectName: foodforlife-producer-api
