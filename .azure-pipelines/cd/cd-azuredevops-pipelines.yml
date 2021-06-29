@@ -4,10 +4,8 @@ resources:
   pipelines:
     - pipeline: release-pipeline
       source: foodforlife-sreejith824.producers-api-platform
-      trigger: null
-      branches:
-        include:
-          - main
+      trigger:
+
 pr: none
 variables:
   - group: foodforlife-variable-group
