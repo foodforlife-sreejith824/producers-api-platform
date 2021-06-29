@@ -1,5 +1,15 @@
 name: CD Pipeline- Helm and AKS
+
 trigger: none
+resources:
+  pipelines:
+    pipeline: release-pipeline 
+    source: foodforlife-sreejith824.producers-api-platform
+    trigger:
+    branches:
+      include:
+        - main
+
 pr: none
 
 # define variables: registryName, registryLogin and registryPassword in the Azure pipeline UI definition
