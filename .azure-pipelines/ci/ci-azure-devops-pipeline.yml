@@ -1,4 +1,6 @@
-name: ci-pipeline
+
+name: CI Pipeline- Image and Helm to ACR
+
 trigger:
   branches:
     include: 
