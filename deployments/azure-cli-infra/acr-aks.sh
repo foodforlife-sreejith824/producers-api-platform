@@ -28,12 +28,12 @@ echo "======================================================================="
 #service principal for ACR push
 az ad sp delete --id http://$ACR_SP
 ACR_SP_AZ_CRED=$(az ad sp create-for-rbac --name http://$ACR_SP --scopes $ACR_REGISTRY_ID --role acrpush --sdk-auth --output json)
-echo "Secret for for ACR push : $ACR_SP_AZ_CRED"
+echo "Secret for for ACR image push : $ACR_SP_AZ_CRED"
 
 #service principal for ACR Helm push
 az ad sp delete --id http://$ACR_HELM_SP
 ACR_HELM_SP_AZ_CRED=$(az ad sp create-for-rbac --name http://$ACR_HELM_SP --scopes $ACR_REGISTRY_ID --role acrpush --sdk-auth --output json)
-echo "Secret for for ACR push : $ACR_HELM_SP_AZ_CRED"
+echo "Secret for for ACR Helm package push : $ACR_HELM_SP_AZ_CRED"
 
 #service principal for AKS deployment
 az ad sp delete --id http://$AKS_SP
