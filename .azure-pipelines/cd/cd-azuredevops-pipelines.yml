@@ -1,11 +1,14 @@
 name: CD Pipeline- Helm and AKS
+
 trigger: none
 resources:
   pipelines:
     - pipeline: release-pipeline
       source: foodforlife-sreejith824.producers-api-platform
       trigger:
-
+        branches:
+          include:
+            - master
 pr: none
 variables:
   - group: foodforlife-variable-group
