@@ -5,11 +5,6 @@ pr: none
 variables:
   - group: foodforlife-variable-group
   - template: cd-vars-template.yml
-    parameters:
-      projectName: $(APP_NAME)
-  - name: k8sNamespace
-    value: $(NAMESPACE)
-    
 
 # define 5 variables: aks, rg, aksSpId, aksSpSecret and aksSpTenantId in the Azure pipeline UI definition
 stages:
@@ -22,7 +17,7 @@ stages:
         displayName: deploy helm chart into AKS
         pool:
           vmImage: ubuntu-latest
-        environment: test-$(APP_NAME)
+        environment: test-${{ variables.projectName }}
         strategy:
           runOnce:
             deploy:

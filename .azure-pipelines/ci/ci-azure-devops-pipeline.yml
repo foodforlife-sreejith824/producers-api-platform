@@ -1,10 +1,7 @@
 trigger:
   branches:
-    include:
-      - refs/tags/project-one/*
-  paths:
-    include:
-      - src/Services/ProjectOne/*
+    [main]
+
 
 pr: none
 
@@ -12,7 +9,7 @@ pool:
   vmImage: "ubuntu-latest"
 
 variables:
-  - group: acr-variable-group
+  - group: foodforlife-variable-group
   - template: ../common/ci-vars-template.yml
     parameters:
       projectName: "project-one"
