@@ -2,7 +2,6 @@ trigger:
   branches:
     [main]
 
-
 pr: none
 
 pool:
@@ -10,12 +9,7 @@ pool:
 
 variables:
   - group: foodforlife-variable-group
-  - template: ../common/ci-vars-template.yml
-    parameters:
-      projectName: "project-one"
-      dockerRegistryServiceConnectionName: "acr-connection-name"
-      dockerfile: "src/Services/Project-One/Dockerfile"
-      buildContext: "$(System.DefaultWorkingDirectory)"
+  - template: ci-vars-template.yml
 
 steps:
-  - template: ../common/ci-steps-template.yml
+  - template: ci-steps-template.yml

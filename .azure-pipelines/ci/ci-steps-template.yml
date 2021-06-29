@@ -1,30 +1,37 @@
+
 steps:
-  - task: Docker@2
-    displayName: Build and push an image to container registry
+  - task: Maven@3
+    displayName: Maven clean build 
     inputs:
-      command: buildAndPush
-      repository: $(imageName)
-      dockerfile: $(dockerfile)
+      mavenPomFile: 'pom.xml'
+      goals: 'clean build'
+      publishJUnitResults: true
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      javaHomeOption: 'JDKVersion'
+      mavenVersionOption: 'Default'
+      mavenAuthenticateFeed: false
+      effectivePomSkip: false
+      sonarQubeRunAnalysis: false
+
+  - task: Docker@2
+    displayName: Build and push an image to container registry  
+    inputs:
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'      
       containerRegistry: $(dockerRegistryServiceConnectionName)
-      buildContext: $(buildContext)
+      repository: $(projectName)
       tags: |
         $(imageTag)
 
   - task: HelmInstaller@1
     displayName: "install helm"
-    inputs:
-      helmVersionToInstall: $(helmVersion)
+
   - bash: |
-      echo $(registryPassword) | helm registry login $(registryName).azurecr.io --username $(registryLogin) --password-stdin
-      cd deploy/k8s/helm/
-      helm chart save $(helm package --app-version $(imageTag) --version $(helmChartVersion) ./$(projectName) | grep -o '/.*.tgz') $(registryName).azurecr.io/charts/$(projectName):$(imageTag)
-      helm chart push $(registryName).azurecr.io/charts/$(projectName):$(helmChartVersion)
-      echo $(jq -n --arg version "$(helmChartVersion)" '{helmChartVersion: $version}') > $(build.artifactStagingDirectory)/variables.json
+      echo $(ACR_HELM_SP_PASSWORD) | helm registry login $(registryServerName) --username $(ACR_HELM_SP_USERNAME) --password-stdin
+      helm chart save $(helmChartPath) $(registryServerName)/$(helmChart):latest
+      helm chart push $(registryServerName)/$(helmChart):latest
     failOnStderr: true
     displayName: "helm package"
-  - task: CopyFiles@2
-    inputs:
-      sourceFolder: $(helmfrom)
-      targetFolder: $(helmto)
+
   - publish: $(build.artifactStagingDirectory)
     artifact: build-artifact
