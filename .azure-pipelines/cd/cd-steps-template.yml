@@ -7,13 +7,13 @@ steps:
   - bash: |
 
        az login --service-principal --username $(AKS_SP_ID) --password $(AKS_SP_PASSWORD) --tenant $(AKS_SP_TENANT)
-       az aks get-credentials -n ${{ variables.aksClusterName }} -g ${{ variables.resourceGroup }} 
+       az aks get-credentials -n $( aksClusterName ) -g $( resourceGroup )
 
-       echo $(ACR_HELM_SP_PASSWORD) | helm registry login ${{ variables.registryServerName }} --username $(ACR_HELM_SP_USERNAME) --password-stdin
+       echo $(ACR_HELM_SP_PASSWORD) | helm registry login $( registryServerName ) --username $(ACR_HELM_SP_USERNAME) --password-stdin
 
-       helm chart pull ${{ variables.registryServerName }}/${{ variables.helmChart }}:latest
-       helm chart export ${{ variables.registryServerName }}/${{ variables.helmChart }}:latest --destination $(pipeline.workspace)/install
+       helm chart pull $( registryServerName )/$( helmChart ):latest
+       helm chart export $( registryServerName )/$( helmChart ):latest --destination $(pipeline.workspace)/install
        
-       helm upgrade --namespace ${{ variables.aksNamespace }} --create-namespace --install ${{ variables.projectName }} $(pipeline.workspace)/install/${{ variables.helmChart }}
+       helm upgrade --namespace $( aksNamespace ) --create-namespace --install $( projectName ) $(pipeline.workspace)/install/$( helmChart )
     failOnStderr: true
     displayName: "deploy helm chart"
