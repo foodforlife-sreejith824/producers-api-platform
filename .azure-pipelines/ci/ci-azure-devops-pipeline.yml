@@ -1,9 +1,7 @@
 name: CI Pipeline- Image and Helm to ACR
 
 trigger:
-  branches:
-    include: 
-      - main/*
+ - main
 
 pr: none
 
