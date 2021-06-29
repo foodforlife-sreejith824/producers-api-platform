@@ -5,9 +5,9 @@ name: CI and CD with Manifest
 on: 
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [ release/* ]
   pull_request:
-    branches: [ main ]
+    branches: [ release/* ]
 
 # Environment variables available to all jobs and steps in this workflow
 env:
@@ -18,7 +18,7 @@ env:
   SECRET: foodforlife-secret
   ACR_SERVER_NAME : foodforlifeacr.azurecr.io
   APP_NAME: foodforlife-producer-api
-  TAG: 0.0.5-snapshot
+  TAG: 0.0.6-snapshot
   
 jobs:
   build:

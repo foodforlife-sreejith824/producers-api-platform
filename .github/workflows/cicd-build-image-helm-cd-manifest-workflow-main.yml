@@ -5,9 +5,9 @@ name: CI and CD with Helm charts
 on: 
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [ release/* ]
   pull_request:
-    branches: [ main ]
+    branches: [ release/* ]
 
 # Environment variables available to all jobs and steps in this workflow
 env:
