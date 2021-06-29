@@ -4,7 +4,7 @@ steps:
     displayName: Maven clean build 
     inputs:
       mavenPomFile: 'pom.xml'
-      goals: 'clean build'
+      goals: 'clean install'
       publishJUnitResults: true
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
       javaHomeOption: 'JDKVersion'
