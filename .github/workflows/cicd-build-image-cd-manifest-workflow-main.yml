@@ -18,7 +18,7 @@ env:
   SECRET: foodforlife-secret
   ACR_SERVER_NAME : foodforlifeacr.azurecr.io
   APP_NAME: foodforlife-producer-api
-  TAG: 0.1.1-snapshot
+  TAG: 0.1.2-snapshot
   
 jobs:
   build:
